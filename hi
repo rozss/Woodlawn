@@ -3,29 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple OS with Browser</title>
+    <title>Windows 11 Simulation</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f3f3;
         }
         #desktop {
             width: 100%;
             height: 100vh;
             position: relative;
-            background-color: #87ceeb;
+            background-color: #0078d7;
         }
         .icon {
             width: 100px;
             height: 100px;
             background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             text-align: center;
             line-height: 100px;
             position: absolute;
             cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
         }
         #browser {
             display: none;
@@ -37,6 +49,7 @@
             top: 10%;
             left: 10%;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            border-radius: 10px;
         }
         #browser-header {
             background-color: #0078d7;
@@ -52,22 +65,48 @@
         #content {
             padding: 20px;
         }
+        #url-input {
+            width: 80%;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        #games {
+            display: none;
+            padding: 20px;
+        }
+        .game {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div id="desktop">
         <div class="icon" style="top: 50px; left: 50px;" onclick="openBrowser()">Browser</div>
-        <div class="icon" style="top: 50px; left: 200px;">File Explorer</div>
-        <div class="icon" style="top: 50px; left: 350px;">Settings</div>
+        <div class="icon" style="top: 50px; left: 200px;" onclick="openGames()">Games</div>
+        <div class="icon" style="top: 50px; left: 350px;">File Explorer</div>
         <div id="browser">
             <div id="browser-header">
                 <span id="close-btn" onclick="closeBrowser()">X</span>
             </div>
             <div id="content">
-                <h1>Welcome to the Browser!</h1>
-                <p>Type a URL to visit.</p>
+                <input type="text" id="url-input" placeholder="Enter URL" />
+                <button onclick="navigate()">Go</button>
+                <iframe id="web-frame" style="width: 100%; height: 80%; border: none;"></iframe>
             </div>
         </div>
+        <div id="games">
+            <h2>Games</h2>
+            <div class="game" onclick="playTicTacToe()">Tic Tac Toe</div>
+            <div class="game" onclick="playGuessingGame()">Number Guessing Game</div>
+            <button onclick="closeGames()">Close</button>
+        </div>
+    </div>
+    <div id="taskbar">
+        <span style="color: white;">Start</span>
     </div>
     <script>
         function openBrowser() {
@@ -75,7 +114,3 @@
         }
         function closeBrowser() {
             document.getElementById('browser').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
